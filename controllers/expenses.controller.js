@@ -36,3 +36,19 @@ exports.add = (req, res) => {
       res.status(422).send({answer: err})
     }
   }
+
+    exports.remove = (req, res) => {
+      const {id} = req.params;
+      if (!id) {
+        res.status(422).send({answer: "Invalid id"})
+      }
+      expenses.destroy({where: {id}})
+      .then(async(removed) =>  {
+        if(removed) {
+          return this.show(req, res);
+        }
+        return res.status(404).send({answer: "row not found"})
+      }).catch(err => {
+        res.status(422).send({answer: err});
+      })
+    }
