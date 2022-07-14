@@ -6,5 +6,8 @@ module.exports = (app) => {
     .post(expensesController.add)
     .get(expensesController.show);
     
+    router.route("/:id")
+    .delete(expensesController.remove);
+    
     app.use("/api/expenses", router);
 }
