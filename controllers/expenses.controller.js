@@ -3,8 +3,7 @@ const {expenses} = require("../models");
 // post
 
 exports.add = (req, res) => {
-  const {shop} = req.body;
-  const {spend} = req.body;
+  const {shop, spend} = req.body;
   const errorsArr = [];
 
     if (!shop || !spend) {
@@ -22,7 +21,7 @@ exports.add = (req, res) => {
 
     expenses.create(req.body)
     .then(async(data) => {
-      res.send(await expenses.findAll());
+      return res.send(await expenses.findAll());
     }).catch(err => {
       res.status(422).send({answer: err});
     })
