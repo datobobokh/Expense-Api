@@ -3,7 +3,8 @@ module.exports = (app) => {
     const router = require("express").Router();
 
     router.route("/")
-    .post(expensesController.add);
+    .post(expensesController.add)
+    .get(expensesController.show);
     
     app.use("/api/expenses", router);
 }
