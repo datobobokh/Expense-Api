@@ -21,7 +21,7 @@ exports.add = (req, res) => {
 
     expenses.create(req.body)
     .then(async(data) => {
-      return res.send(await expenses.findAll());
+      return this.show(req, res);
     }).catch(err => {
       res.status(422).send({answer: err});
     })
