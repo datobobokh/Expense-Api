@@ -26,3 +26,13 @@ exports.add = (req, res) => {
       res.status(422).send({answer: err});
     })
   }
+
+  exports.show = async (req, res) => {
+    try {
+      const all = await expenses.findAll();
+      return res.json(all);
+    }
+    catch (err){
+      res.status(422).send({answer: err})
+    }
+  }
