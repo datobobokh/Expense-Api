@@ -4,14 +4,10 @@ module.exports = (sequelize, Sequelize) => {
       shop: {
         type: Sequelize.STRING
       },
-      date: {
-        type: Sequelize.DATE,
-      },
       spend: {
         type: Sequelize.FLOAT
       }
-    },
-    {timestamps: false}
+    }
   )
   return expenses;
 }
