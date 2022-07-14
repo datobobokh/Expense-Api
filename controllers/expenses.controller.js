@@ -3,31 +3,21 @@ const {expenses} = require("../models");
 // post
 
 exports.add = (req, res) => {
+  const {shop} = req.body;
+  const {spend} = req.body;
   const errorsArr = [];
-    if (!req.body["shop"]) {
-      errorsArr.push("Text is required");
-      res.status(422);
-      res.send({answer: "Text is required"});
+
+    if (!shop || !spend) {
+      errorsArr.push("Shop or Spend input is not defined");
     }
-    if (!req.body["spend"]){
-      errorsArr.push("Number is required");
-      res.status(422);
-      res.send({answer: "Number is required"});
+    else {
+      if ( isNaN(spend) || (spend < 0)){
+        errorsArr.push("Input is not number or number is not positive");
+      }
     }
-    if (req.body["spend"] < 0){
-      errorsArr.push("Number should be positive");
-      res.status(422);
-      res.send({answer: "Number should be positive"});
-    }
-    if (!req.body["date"]) {
-      errorsArr.push("Date is required");
-      res.status(422);
-      res.send({answer: "Date is required"});
-    }
-    
+
     if (errorsArr.length) {
-      res.status(422);
-      res.send({answer: errorsArr});
+      return res.status(422).send({answer: errorsArr});
     } 
 
     expenses.create(req.body)
