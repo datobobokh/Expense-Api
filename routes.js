@@ -7,7 +7,8 @@ module.exports = (app) => {
     .get(expensesController.show);
     
     router.route("/:id")
-    .delete(expensesController.remove);
+    .delete(expensesController.remove)
+    .patch(expensesController.edit);
     
     app.use("/api/expenses", router);
 }
