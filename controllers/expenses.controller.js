@@ -58,13 +58,19 @@ exports.edit = (req, res) => {
   const errorsArr = [];
 
   if (id) {
-    if (!shop || !spend) {
-      errorsArr.push("Shop or Spend input is not defined");
+    if (!shop && !spend) {
+      errorsArr.push("At least one input should be defined");
     }
     else {
-      if ( isNaN(spend) || (spend < 0)){
-        errorsArr.push("Input is not a number or number is not positive");
+      if (spend) {
+        if ( isNaN(spend) || (spend < 0)){
+          errorsArr.push("Input is not a number or number is not positive");
+        }
       }
+      if (!shop) {
+        errorsArr.push("Shop name should be defined");
+      }
+
     }
     if (errorsArr.length) {
       return res.status(422).send({answer: errorsArr})
@@ -80,5 +86,8 @@ exports.edit = (req, res) => {
     }).catch(err => {
       res.status(422).send({answer: err});
     })
+  }
+  else {
+    res.status(422).send("Id is not defined");
   }
 }
