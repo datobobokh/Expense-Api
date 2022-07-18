@@ -69,10 +69,11 @@ exports.edit = (req, res) => {
           errorsArr.push("Input is not a number or number is not positive");
         }
       }
-      if (!shop) {
-        errorsArr.push("Shop name should be defined");
+      if (shop) {
+        if(!shop.trim()) {
+          errorsArr.push("Shop name should be defined");
+        }
       }
-
     }
     if (errorsArr.length) {
       return res.status(422).send({answer: errorsArr})
