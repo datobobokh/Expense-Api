@@ -6,13 +6,15 @@ exports.add = (req, res) => {
   const {shop, spend} = req.body;
   const errorsArr = [];
 
-    if (!shop || !spend) {
-      errorsArr.push("Shop or Spend input is not defined");
+    if (!shop && !spend) {
+      return res.status(422).send("Shop and Spend input is not defined");
+    } 
+
+    if (isNaN(spend) || (spend < 0)){
+      errorsArr.push("Input is not number or number is not positive");
     }
-    else {
-      if ( isNaN(spend) || (spend < 0)){
-        errorsArr.push("Input is not number or number is not positive");
-      }
+    if (!shop) {
+      errorsArr.push("shop undefined");
     }
 
     if (errorsArr.length) {
@@ -78,7 +80,6 @@ exports.edit = (req, res) => {
           valuesObj.shop = shop;
         }
       }
-
     }
     if (errorsArr.length) {
       return res.status(422).send({answer: errorsArr})
