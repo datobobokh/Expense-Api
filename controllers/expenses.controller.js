@@ -58,7 +58,7 @@ exports.edit = (req, res) => {
   const {id} = req.params;
   const {shop, spend} = req.body;
   const errorsArr = [];
-
+  const valuesObj = {};
   if (id) {
     if (!shop && !spend) {
       errorsArr.push("At least one input should be defined");
@@ -68,18 +68,23 @@ exports.edit = (req, res) => {
         if ( isNaN(spend) || (spend < 0)){
           errorsArr.push("Input is not a number or number is not positive");
         }
+        else {
+          valuesObj.spend = spend
+        }
       }
       if (shop) {
         if(!shop.trim()) {
           errorsArr.push("Shop name should be defined");
+        }
+        else {
+          valuesObj.shop = shop;
         }
       }
     }
     if (errorsArr.length) {
       return res.status(422).send({answer: errorsArr})
     }
-    
-    expenses.update({ shop: shop, spend: spend}, {
+    expenses.update(valuesObj, {
     where: {id: id}})
     .then((edited) => {
       if(edited) {
