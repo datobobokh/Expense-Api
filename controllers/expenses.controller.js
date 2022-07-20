@@ -1,7 +1,7 @@
 const expenses = require("../models");
 
 exports.add = (req, res) => {
-  const {shop, spend} = req.body;
+  const { shop, spend } = req.body;
   const errorsArr = [];
 
   if (!shop && !spend) {
